@@ -1,11 +1,14 @@
 # Spotify Stalker
 Discord Selfbot to evaluate what your friends are listening to.
 
-## How?
-This bot acts like a discord user and connects to Discord's Websocket.
-It checks for `PRESENCE_UPDATE` and stores the value.
+⚠️ This is a so called 'SelfBot' and agains the TOS of `Discord Inc.`  
+➡️ See [Discord Terms]("https://discord.com/terms")  
+**Use on own Risk!**
 
-It stores what songs are listened to.
-
-## ?
-i dont fucking know, it was a idea to check how similar music taste we have
+## Requirements
+- Have a MongoDB
+- The target user's need to be added as your friends
+    - This Bot checks the Presence of the target. Make sure you can see it
+- Discord Token Authorization key
+## Data
+The data obtained will be stored inside a Database
