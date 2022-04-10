@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  core:
+    build: .
+    container_name: spotify-checker-core
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    volumes:
+      - ./data/logs:/logs
+    networks:
+     - spoticheck
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - ./data/db/:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+      - MONGO_INITDB_DATABASE=spoticheck
+    networks:
+      - spoticheck
+
+
+networks:
+  spoticheck:

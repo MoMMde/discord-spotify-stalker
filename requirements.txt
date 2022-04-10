@@ -1,0 +1,5 @@
+schedule
+pymongo
+argparse
+dataclasses
+websocket-client
