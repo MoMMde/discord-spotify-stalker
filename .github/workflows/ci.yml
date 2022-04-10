@@ -1,0 +1,36 @@
+# action.yaml
+name: 'CI'
+description: 'CI using Blacken https://github.com/marketplace/actions/python-blacken'
+branding:
+  icon: 'code'
+  color: 'black'
+inputs:
+  path:
+    description: 'File or directory to run black on.'
+    required: false
+    default: '.'
+  line-length:
+    description: 'The number of characters allowed per line.'
+    required: false
+    default: '100'
+  sanity-check:
+    description: 'Sanity check [fast|safe]'
+    required: false
+    default: 'safe'
+  only-check:
+    description: 'Only check the files instead of modify them [yes|no] '
+    required: false
+    default: 'no'
+
+outputs:
+  output:
+    description: 'output'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.sanity-check }}
+    - ${{ inputs.line-length }}
+    - ${{ inputs.only-check }}
+    - ${{ inputs.path }}
