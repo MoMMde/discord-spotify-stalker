@@ -2,7 +2,7 @@
 Discord Selfbot to evaluate what your friends are listening to.
 
 ⚠️ This is a so called 'SelfBot' and agains the TOS of `Discord Inc.`  
-➡️ See [Discord Terms](https://discord.com/terms) (https://discord.com/terms)
+➡️ See [Discord Terms](https://discord.com/terms) (https://discord.com/terms)  
 **Use on own Risk!**
 
 ## Requirements
