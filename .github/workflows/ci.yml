@@ -28,3 +28,26 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+  build-docker-image:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    name: Build Docker Image
+    steps:
+
+      - name: Fetch Sources
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        env:
+          DOCKER_USERNAME: mommde
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: echo $DOCKER_PASSWORD | docker login ghcr.io --username $DOCKER_USERNAME --password-stdin
+
+      - name: Build & Tag
+        run: docker build -t ghcr.io/MoMMde/discord-spotify-stalker:latest -t ghcr.io/MoMMde/discord-spotify-stalker:"$GITHUB_SHA" .
+
+      - name: Push Image to GitHub Container Registry
+        run: docker push ghcr.io/MoMMde/discord-spotify-stalker:latest
+
+      - name: Push Specific Image to GitHub Container Registry
+        run: docker push ghcr.io/MoMMde/discord-spotify-stalker:"$GITHUB_SHA"
