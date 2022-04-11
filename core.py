@@ -24,9 +24,7 @@ DISCORD_HEADER = {
    'authorization': TOKEN
 }
 
-TARGET_USERS = [
-    # LIST OF DISCORD ID's
-]
+TARGET_USERS = os.getenv("TARGET_USERS").split(",")
 
 AUTH_PAYLOAD = {
     "op": 2,
@@ -92,7 +90,7 @@ def listen_for_events(ws, collection):
                             LOG.info("%s stopped listening" % user_name)
                         pass
                     activity = [activity for activity in event['activities'] if activity['name'] == 'Spotify'][0]
-                    if user_id not in TARGET_USERS:
+                    if user_id not in TARGET_USERS and TARGET_USERS != []:
                         pass
                     current_listeners.append(user_id)
                     statistics = SpotifyStatistic(
