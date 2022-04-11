@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  flake:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -30,6 +30,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
   build-docker-image:
     runs-on: ubuntu-latest
+    needs: flake
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     name: Build Docker Image
     steps:
@@ -41,13 +42,13 @@ jobs:
         env:
           DOCKER_USERNAME: mommde
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-        run: echo $DOCKER_PASSWORD | docker login ghcr.io --username $DOCKER_USERNAME --password-stdin
+        run: echo $DOCKER_PASSWORD | docker login ghcr.io --username mommde --password-stdin
 
       - name: Build & Tag
-        run: docker build -t ghcr.io/MoMMde/discord-spotify-stalker:latest -t ghcr.io/MoMMde/discord-spotify-stalker:"$GITHUB_SHA" .
+        run: docker build -t ghcr.io/mommde/discord-spotify-stalker:latest -t ghcr.io/mommde/discord-spotify-stalker:"$GITHUB_SHA" .
 
       - name: Push Image to GitHub Container Registry
-        run: docker push ghcr.io/MoMMde/discord-spotify-stalker:latest
+        run: docker push ghcr.io/mommde/discord-spotify-stalker:latest
 
       - name: Push Specific Image to GitHub Container Registry
-        run: docker push ghcr.io/MoMMde/discord-spotify-stalker:"$GITHUB_SHA"
+        run: docker push ghcr.io/mommde/discord-spotify-stalker:"$GITHUB_SHA"
